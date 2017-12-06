@@ -1,6 +1,6 @@
 # Add project specific ProGuard rules here.
 # By default, the flags in this file are appended to flags specified
-# in /Users/Daniel/Library/Android/sdk/tools/proguard/proguard-android.txt
+# in C:\Users\lipec\AppData\Local\Android\sdk/tools/proguard/proguard-android.txt
 # You can edit the include path and order by changing the proguardFiles
 # directive in build.gradle.
 #
@@ -23,3 +23,37 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+-dontwarn javax.xml.bind.DatatypeConverter
+-dontwarn org.apache.commons.codec.**
+-dontwarn com.ning.http.client.**
+
+
+ # Google Play Services library
+  -keep class * extends java.util.ListResourceBundle {
+   protected Object[ ][ ] getContents();
+}
+
+ -keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+  public static final *** NULL;
+ }
+
+ -keepnames @com.google.android.gms.common.annotation.KeepName class *
+ -keepclassmembernames class * {
+    @com.google.android.gms.common.annotation.KeepName *;
+  }
+
+ -keepnames class * implements android.os.Parcelable {
+  public static final ** CREATOR;
+ }
+
+ -keep public class * implements com.bumptech.glide.module.GlideModule
+ -keep public class * extends com.bumptech.glide.module.AppGlideModule
+ -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+   **[] $VALUES;
+   public *;
+ }
+
+ # for DexGuard only
+ -keepresourcexmlelements manifest/application/meta-data@value=GlideModule
